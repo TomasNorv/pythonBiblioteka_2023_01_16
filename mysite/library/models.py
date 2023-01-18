@@ -28,7 +28,7 @@ class Book(models.Model):
         for zanras in zanrai:
             sujungta += zanras.name + ", "
         return sujungta
-
+    display_genre.short_description ="Žanrai"  # pakeitem pavadinima is display genre i Žanrai
 
     def __str__(self):
         return f"{self.title} {self.author}"
