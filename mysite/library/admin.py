@@ -17,6 +17,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'status', 'due_back') # padarem stulpelius, atvaizduoja stulpelius
     list_filter = ('status', 'due_back')   #uzdejom piltra
     search_fields = ("uuid", "book__title") #pridejom paieska pagal uuid ir knygos pavadinima
+    list_editable = ('due_back', 'status')
     fieldsets = (
         ('General', {'fields': ('uuid', 'book')}),
         ('Availability', {'fields': ('status', 'due_back')}),
