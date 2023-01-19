@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}HOME{% endblock %}
+{% block content %}
+<h1>Sveiki atvyke į Skaitytojų rojų</h1>
+<p>Šiuo metu turime :</p>
+<ul>
+    <li><b>Knygų:</b> {{ num_books }}</li>
+    <li><b>Egzempliorių:</b> {{ num_instances }}</li>
+    <li><b>Laisvų:</b> {{ num_instances_available }}</li>
+    <li><b>Autorių:</b> {{ num_authors }}</li>
+</ul>
+
+{% endblock %}
