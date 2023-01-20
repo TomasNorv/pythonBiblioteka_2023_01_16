@@ -20,3 +20,10 @@ def index(request):
 
     # renderiname index.html, su duomenimis kintamąjame context
     return render(request, 'index.html', context = context)
+
+def authors(request):
+    authors = Author.objects.all()
+    context = {
+        'authors': authors,
+    }
+    return render(request, 'authors.html', context = context)

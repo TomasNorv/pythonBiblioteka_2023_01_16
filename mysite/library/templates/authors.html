@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Autoriai{% endblock %}
+{% block content %}
+<h1>Autoriai</h1>
+{% for author in authors %}
+<hr>
+<p>Vardas: {{ author.first_name }} </p>
+<p>Pavarde: {{ author.last_name }} </p>
+<!--<p>{{author}}</p>-->
+{% endfor %}
+{% endblock %}
