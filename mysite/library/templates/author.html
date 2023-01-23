@@ -7,5 +7,10 @@
 <p>Pavarde: {{ author.last_name }} </p>
 <p>{{ author.description }} </p>
 <hr>
-
+<h5>Mes turima šias autoriaus {{ author }} knygas </h5>
+<ol>
+{% for book in author.books.all %}
+    <li>{{ book.title }}</li>
+{% endfor %}
+<ol>
 {% endblock %}
