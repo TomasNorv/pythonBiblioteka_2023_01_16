@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Knyga{% endblock %}
+{% block content %}
+<h1>Knygos aprašymas</h1>
+<p><b>Pavadinimas:</b> {{ book.title }} </p>
+<p><b>Autorius:</b> {{ book.author }} </p>
+<p><b>ISBN kodas:</b> {{ book.isbn }} </p>
+<p><b>Žanras:</b> {{ book.display_genre }} </p>
+<hr>
+<p> {{ book.summary }} </p>
+<hr>
+<h4>Knygu egzemplioriai</h4>
+<ol>
+{% for instance in book.instances.all %}
+
+    <li>{{ instance.uuid }} {{ instance.due_back }}</li>
+    <span class="{% if instance.status == 'g' %}text-success{% elif instance.status == 'p' %}text-danger{% else %}text-warning{% endif %}">
+        {{ instance.get_status_display }}
+      </span>
+
+{% endfor %}
+<ol>
+
+{% endblock %}

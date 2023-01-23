@@ -59,7 +59,7 @@ class Author(models.Model):
 
 
 class BookInstance(models.Model):
-    book = models.ForeignKey(to="Book", on_delete=models.CASCADE)
+    book = models.ForeignKey(to="Book", on_delete=models.CASCADE, related_name='instances')
     uuid = models.UUIDField(verbose_name="UUID", default=uuid.uuid4, help_text='Unikalus ID knygos kopijai')
     due_back = models.DateField('Bus prieinama', null=True, blank=True)
 
