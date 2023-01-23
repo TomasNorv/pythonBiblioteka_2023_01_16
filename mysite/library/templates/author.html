@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Autorius{% endblock %}
+{% block content %}
+<h1>Autoriaus aprašymas</h1>
+<p>Vardas: {{ author.first_name }} </p>
+<p>Pavarde: {{ author.last_name }} </p>
+<p>{{ author.description }} </p>
+<hr>
+
+{% endblock %}

@@ -41,6 +41,7 @@ class Book(models.Model):
 class Author(models.Model):
     first_name = models.CharField('Vardas', max_length=100)
     last_name = models.CharField('Pavardė', max_length=100)
+    description = models.TextField(verbose_name="Aprašymas", max_length=3000, null=True, blank=True, default="")
 
     def display_books(self):
         return ", ".join(book.title for book in self.books.all()[:3])

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Book, BookInstance, Author
 # Create your views here.
@@ -27,3 +27,10 @@ def authors(request):
         'authors': authors,
     }
     return render(request, 'authors.html', context = context)
+
+def author(request, author_id):
+    author = get_object_or_404(Author, pk=author_id)
+    context = {
+        'author': author,
+    }
+    return render(request, 'author.html', context=context)
