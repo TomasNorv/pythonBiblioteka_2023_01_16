@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Book, BookInstance, Author
 from django.views import generic
 from django.core.paginator import Paginator
+from django.db.models import Q
+
 # Create your views here.
 
 
@@ -49,3 +51,8 @@ class BookDetailView(generic.DetailView):
     model = Book
     context_object_name = 'book'
     template_name = 'book.html'
+
+def search(request):
+    query = request.GET.get('query')
+    search_results = Book.objects.filter(Q(title__icontains=query) | Q(summary__icontains=query) | Q(author__first_name__icontains=query) | Q(author__last_name__icontains=query))
+    return render(request, 'search.html', {'books': search_results, 'query': query})
