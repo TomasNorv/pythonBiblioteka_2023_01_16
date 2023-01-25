@@ -21,7 +21,7 @@ class Book(models.Model):
                             help_text='13 Simbolių <a href="https://www.isbn-international.org/content/what-isbn">ISBN kodas</a>')
     author = models.ForeignKey(to="Author", on_delete=models.SET_NULL, null=True, related_name="books") #related_name kad tureti rysi su knygom autoriui.
     genre = models.ManyToManyField(to="Genre")
-    cover = models.ImageField(verbose_name='Viršelis', upload_to='covers', null=True)
+    cover = models.ImageField(verbose_name='Viršelis', upload_to='covers', null=True, blank=True)
     def display_genre(self):   #arba  return ', '.join(genre.name for genre in self.genre.all()[:3])
         sujungta= ""
         zanrai = self.genre.all()
