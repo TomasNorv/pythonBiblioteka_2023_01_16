@@ -42,8 +42,8 @@ class Book(models.Model):
 
 
 class Author(models.Model):
-    first_name = models.CharField('Vardas', max_length=100)
-    last_name = models.CharField('Pavardė', max_length=100)
+    first_name = models.CharField(verbose_name='Vardas', max_length=100)
+    last_name = models.CharField(verbose_name='Pavardė', max_length=100)
    # description = models.TextField(verbose_name="Aprašymas", max_length=3000, null=True, blank=True, default="")
     description = HTMLField(verbose_name="Aprašymas", blank=True, null=True) # paturbintas variantas autoriaus aprasymui, daugiau funkciju
 
@@ -65,7 +65,7 @@ class Author(models.Model):
 class BookInstance(models.Model):
     book = models.ForeignKey(to="Book", on_delete=models.CASCADE, related_name='instances')
     uuid = models.UUIDField(verbose_name="UUID", default=uuid.uuid4, help_text='Unikalus ID knygos kopijai')
-    due_back = models.DateField('Bus prieinama', null=True, blank=True)
+    due_back = models.DateField(verbose_name='Bus prieinama', null=True, blank=True)
     reader = models.ForeignKey(to=User, verbose_name="Skaitytojas",  on_delete=models.SET_NULL, null=True, blank=True)
 
     def is_overdue(self):
@@ -97,5 +97,19 @@ class BookInstance(models.Model):
     class Meta:
         verbose_name = "Knygos egzempliorius"
         verbose_name_plural ='Knygų egzemplioriai'
+
+
+class BookReview(models.Model):
+    book = models.ForeignKey(to='Book', on_delete=models.SET_NULL, null=True, blank=True)
+    reviewer = models.ForeignKey(to=User, verbose_name="Vartotojas", on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(verbose_name="laikas", auto_now_add=True)
+    content = models.TextField(verbose_name='Atsiliepimas', max_length=2000)
+
+    class Meta:
+        verbose_name = "Atsiliepimas"
+        verbose_name_plural = 'Atsiliepimai'
+        ordering = ['-date_created']
+
+
 
 
