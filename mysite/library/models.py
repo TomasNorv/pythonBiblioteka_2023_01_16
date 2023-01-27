@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import User
 from datetime import date
+from tinymce.models import HTMLField
 
 # Create your models here.
 class Genre(models.Model):
@@ -17,7 +18,8 @@ class Genre(models.Model):
 
 class Book(models.Model):
     title = models.CharField(verbose_name="Pavadinimas", max_length=200)
-    summary = models.TextField(verbose_name="Aprasymas", max_length=1000)
+    #summary = models.TextField(verbose_name="Aprasymas", max_length=1000)
+    description = HTMLField(verbose_name="Aprašymas", blank=True, null=True) # paturbintas variantas autoriaus aprasymui, daugiau funkciju
     isbn = models.CharField(verbose_name="ISBN", max_length=13,
                             help_text='13 Simbolių <a href="https://www.isbn-international.org/content/what-isbn">ISBN kodas</a>')
     author = models.ForeignKey(to="Author", on_delete=models.SET_NULL, null=True, related_name="books") #related_name kad tureti rysi su knygom autoriui.
@@ -42,7 +44,8 @@ class Book(models.Model):
 class Author(models.Model):
     first_name = models.CharField('Vardas', max_length=100)
     last_name = models.CharField('Pavardė', max_length=100)
-    description = models.TextField(verbose_name="Aprašymas", max_length=3000, null=True, blank=True, default="")
+   # description = models.TextField(verbose_name="Aprašymas", max_length=3000, null=True, blank=True, default="")
+    description = HTMLField(verbose_name="Aprašymas", blank=True, null=True) # paturbintas variantas autoriaus aprasymui, daugiau funkciju
 
     def display_books(self):
         return ", ".join(book.title for book in self.books.all()[:3])

@@ -46,6 +46,7 @@
 
         <li class="nav-item"><a class="nav-link" href="{% url 'logout'%}?next=/library">Atsijungti</a></li>
          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}?next={{request.path}}">Registruotis</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Prisijungti</a></li>
      {% endif %}
 
@@ -58,6 +59,13 @@
     </ul>
   </div>
 </nav>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}" role="alert">
+                {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 <br>
 
     <div class="col-sm-8">

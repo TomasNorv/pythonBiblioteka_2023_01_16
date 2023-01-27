@@ -14,7 +14,7 @@
 <p><b>ISBN kodas:</b> {{ book.isbn }} </p>
 <p><b>Žanras:</b> {{ book.display_genre }} </p>
 <hr>
-<p> {{ book.summary }} </p>
+<p> {{ book.description | safe }} </p>
 <hr>
 <h4>Knygu egzemplioriai</h4>
 <ol>
