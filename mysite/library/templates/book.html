@@ -16,6 +16,17 @@
 <hr>
 <p> {{ book.description | safe }} </p>
 <hr>
+<h4>Atsiliepimai:</h4>
+{% if book.reviews.all %}
+    {% for review in book.reviews.all %}
+      <hr>
+      <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
+      <p>{{ review.content }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Knyga neturi atsiliepimų</p>
+  {% endif %}
+
 <h4>Knygu egzemplioriai</h4>
 <ol>
 {% for instance in book.instances.all %}
