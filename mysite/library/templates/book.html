@@ -27,6 +27,18 @@
     <p>Knyga neturi atsiliepimų</p>
   {% endif %}
 
+ {% if user.is_authenticated %}
+  <div class="fieldWrapper">
+    <hr><br/>
+    <h4>Palikite atsiliepimą:</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.content }}</br>
+      <input type="submit" value="Paskelbti">
+    </form>
+  </div>
+  {% endif %}
+
 <h4>Knygu egzemplioriai</h4>
 <ol>
 {% for instance in book.instances.all %}

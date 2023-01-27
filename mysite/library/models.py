@@ -108,7 +108,8 @@ class BookReview(models.Model):
     class Meta:
         verbose_name = "Atsiliepimas"
         verbose_name_plural = 'Atsiliepimai'
-        ordering = ['-date_created']
+        ordering = ['-date_created'] # pakelia atsiliepima i pati virsu
+
 
 
 
