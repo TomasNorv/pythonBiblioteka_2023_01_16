@@ -8,6 +8,8 @@
 
       {% for instance in instances %}
             <hr>
+ <img class="rounded-circle" src="{{instance.reader.profilis.nuotrauka.url}}">
+
     <a href="{% url 'book' instance.book.id %}">
               <p class="{% if instance.is_overdue %}text-danger{% endif %}">{{ instance.book }} ({{ instance.uuid }}) - {{ instance.due_back }}</p>
 </a>

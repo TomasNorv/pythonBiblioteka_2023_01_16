@@ -20,6 +20,8 @@
 {% if book.reviews.all %}
     {% for review in book.reviews.all %}
       <hr>
+ <img class="rounded-circle" src="{{review.reviewer.profilis.nuotrauka.url}}">
+<br/>
       <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
       <p>{{ review.content }}</p>
     {% endfor %}
@@ -30,10 +32,16 @@
  {% if user.is_authenticated %}
   <div class="fieldWrapper">
     <hr><br/>
-    <h4>Palikite atsiliepimą:</h4>
+    <h4>Palikite atsiliepimą : <span class="glyphicon glyphicon-pencil"></span> </h4>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+      <div class="container">
     <form action="" method="post">
       {% csrf_token %}
-      {{ form.content }}</br>
+      {{ form.content }}
+        </br>
       <input type="submit" value="Paskelbti">
     </form>
   </div>
