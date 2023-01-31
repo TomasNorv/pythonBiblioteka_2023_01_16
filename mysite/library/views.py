@@ -94,7 +94,7 @@ def search(request):
     return render(request, 'search.html', {'books': search_results, 'query': query})
 
 
-class UserBookListView(generic.ListView, LoginRequiredMixin):
+class UserBookListView(LoginRequiredMixin, generic.ListView):
     model = BookInstance
     paginate_by = 3
     template_name = 'user_books.html'
@@ -102,6 +102,20 @@ class UserBookListView(generic.ListView, LoginRequiredMixin):
 
     def get_queryset(self):
         return BookInstance.objects.filter(reader=self.request.user)
+class UserDetailView(LoginRequiredMixin, generic.DetailView):
+    model = BookInstance
+    template_name = 'user_book.html'
+    context_object_name = 'instance'
+
+class UserCreateView(LoginRequiredMixin, generic.CreateView):
+    model = BookInstance
+    fields = ['book', 'due_back', 'status']
+    success_url = "/library/userbooks/"
+    template_name = 'user_bookinstance_form.html'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        return super().form_valid(form)
 
 
 @csrf_protect

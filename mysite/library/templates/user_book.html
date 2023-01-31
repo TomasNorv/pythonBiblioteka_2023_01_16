@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Paimta knyga{% endblock %}
+
+{% block content %}
+{% load static %}
+    <h1>Mano paimta knyga:</h1>
+
+{% if instance.book.cover %}
+
+
+<img src="{{ instance.book.cover.url }}" class="card-img-top" alt="...">
+{% else %}
+<img src="{% static 'img/no-image.png' %}" class="card-img-top">
+{% endif %}
+     <hr>
+     <ul>
+        <li><strong class="{% if instance.is_overdue %}text-danger{% endif %}">Pavadinimas: {{instance.book.title}}</strong></li>
+        <li><strong>Gražinimo terminas:</strong> {{instance.due_back}}</li>
+        <br/>
+      </li>
+    </ul>
+{% endblock %}

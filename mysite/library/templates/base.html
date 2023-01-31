@@ -49,6 +49,7 @@
 
 
         <li class="nav-item"><a class="nav-link" href="{% url 'logout'%}?next=/library">Atsijungti</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'user_bookinstance_create'%}?next=/library">Nauja knyga</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'user_books'%}?next=/library">Mano paimtos knygos</a></li>
          {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'register' %}?next={{request.path}}">Registruotis</a></li>
