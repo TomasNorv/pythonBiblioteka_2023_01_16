@@ -4,7 +4,7 @@ from .models import Book, BookInstance, Author
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -107,6 +107,22 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'user_book.html'
     context_object_name = 'instance'
 
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = BookInstance
+    fields = ['book', 'due_back', 'status']
+    success_url = "/library/userbooks/"
+    template_name = 'user_bookinstance_form.html'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        bookinstance = self.get_object()
+        return self.request.user == bookinstance.reader
+
+
+
 class UserCreateView(LoginRequiredMixin, generic.CreateView):
     model = BookInstance
     fields = ['book', 'due_back', 'status']
@@ -116,6 +132,17 @@ class UserCreateView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.reader = self.request.user
         return super().form_valid(form)
+
+class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = BookInstance
+    success_url = "/library/userbooks/"
+    template_name = 'user_bookinstance_delete.html'
+    context_object_name = 'instance'
+
+    def test_func(self):
+        bookinstance = self.get_object()
+        return self.request.user == bookinstance.reader
+
 
 
 @csrf_protect

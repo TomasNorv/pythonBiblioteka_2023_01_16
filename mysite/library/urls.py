@@ -12,5 +12,8 @@ urlpatterns = [
     path('userbooks/cerate', views.UserCreateView.as_view(), name= 'user_bookinstance_create'),
     path('register/', views.register, name='register'),
     path('profilis/', views.profilis, name='profilis'),
+    path('userbooks/<int:pk>/update', views.UserUpdateView.as_view(), name="user_bookinstance_update"),
+    path('userbooks/<int:pk>/delete', views.UserDeleteView.as_view(), name="user_bookinstance_delete"),
+
 
 ]
