@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from. import views
 urlpatterns = [
     path('', views.index, name= "index"),
@@ -14,6 +14,6 @@ urlpatterns = [
     path('profilis/', views.profilis, name='profilis'),
     path('userbooks/<int:pk>/update', views.UserUpdateView.as_view(), name="user_bookinstance_update"),
     path('userbooks/<int:pk>/delete', views.UserDeleteView.as_view(), name="user_bookinstance_delete"),
-
+    path('i18n/', include('django.conf.urls.i18n')),
 
 ]

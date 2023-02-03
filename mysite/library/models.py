@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from tinymce.models import HTMLField
 from PIL import Image
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class Genre(models.Model):
@@ -18,28 +19,28 @@ class Genre(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(verbose_name="Pavadinimas", max_length=200)
+    title = models.CharField(verbose_name=_("Title"), max_length=200)
     #summary = models.TextField(verbose_name="Aprasymas", max_length=1000)
-    description = HTMLField(verbose_name="Aprašymas", blank=True, null=True) # paturbintas variantas autoriaus aprasymui, daugiau funkciju
-    isbn = models.CharField(verbose_name="ISBN", max_length=13,
+    description = HTMLField(verbose_name=_("Summary"), blank=True, null=True) # paturbintas variantas autoriaus aprasymui, daugiau funkciju
+    isbn = models.CharField(verbose_name=_("ISBN"), max_length=13,
                             help_text='13 Simbolių <a href="https://www.isbn-international.org/content/what-isbn">ISBN kodas</a>')
-    author = models.ForeignKey(to="Author", on_delete=models.SET_NULL, null=True, related_name="books") #related_name kad tureti rysi su knygom autoriui.
-    genre = models.ManyToManyField(to="Genre")
-    cover = models.ImageField(verbose_name='Viršelis', upload_to='covers', null=True, blank=True)
+    author = models.ForeignKey(to="Author", verbose_name=_("Author"), on_delete=models.SET_NULL, null=True, related_name="books") #related_name kad tureti rysi su knygom autoriui.
+    genre = models.ManyToManyField(to="Genre", verbose_name=_("Genre"))
+    cover = models.ImageField(verbose_name=_('Cover'), upload_to='covers', null=True, blank=True)
     def display_genre(self):   #arba  return ', '.join(genre.name for genre in self.genre.all()[:3])
         sujungta= ""
         zanrai = self.genre.all()
         for zanras in zanrai:
             sujungta += zanras.name + ", "
         return sujungta
-    display_genre.short_description ="Žanrai"  # pakeitem pavadinima is display genre i Žanrai
+    display_genre.short_description =_("Genre")  # pakeitem pavadinima is display genre i Žanrai
 
     def __str__(self):
         return f"{self.title} {self.author}"
 
     class Meta:
-        verbose_name = "Knyga"
-        verbose_name_plural ='Knygos'
+        verbose_name = _("Book")
+        verbose_name_plural =_('Books')
 
 
 class Author(models.Model):

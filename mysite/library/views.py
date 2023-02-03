@@ -10,9 +10,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.forms import User
 from django.views.generic.edit import FormMixin
-from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm
+from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm, UserCreateForm
 from django.contrib.auth.decorators import login_required
-
+from django.utils.translation import gettext as _
 
 # Create your views here.
 
@@ -109,9 +109,10 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
 
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = BookInstance
-    fields = ['book', 'due_back', 'status']
+    #fields = ['book', 'due_back', 'status']
     success_url = "/library/userbooks/"
     template_name = 'user_bookinstance_form.html'
+    form_class = UserUpdateForm
 
     def form_valid(self, form):
         form.instance.reader = self.request.user
@@ -125,9 +126,10 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
 
 class UserCreateView(LoginRequiredMixin, generic.CreateView):
     model = BookInstance
-    fields = ['book', 'due_back', 'status']
+    #fields = ['book', 'due_back', 'status']
     success_url = "/library/userbooks/"
     template_name = 'user_bookinstance_form.html'
+    form_class = UserCreateForm
 
     def form_valid(self, form):
         form.instance.reader = self.request.user
@@ -157,20 +159,24 @@ def register(request):
         if password == password2:
             # tikriname, ar neužimtas username
             if User.objects.filter(username=username).exists():
-                messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                #messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                messages.error(request, _('Username %s already exists!') % username)
                 return redirect('register')
             else:
                 # tikriname, ar nėra tokio pat email
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    #messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    messages.error(request, _('Email %s already exists!') % email)
                     return redirect('register')
                 else:
                     # jeigu viskas tvarkoje, sukuriame naują vartotoją
                     User.objects.create_user(username=username, email=email, password=password)
-                    messages.info(request, f'Vartotojas {username} užregistruotas!')
+                    #messages.info(request, (f'Vartotojas {username} užregistruotas!')
+                    messages.info(request, _('User %s  registered!') % username)
                     return redirect('login')
         else:
-            messages.error(request, 'Slaptažodžiai nesutampa!')
+            #messages.error(request, ('Slaptažodžiai nesutampa!')
+            messages.error(request, _('Passwords do not match!'))
             return redirect('register')
     return render(request, 'registration/register.html')
 
